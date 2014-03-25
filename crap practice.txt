@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name = "description" content = "This is a home page"/>
+<meta name = "author" content = "William Salazar" />
+<meta name = "keywords" content = "exercise for home page"/>
+<title>Calculator</title>
+</head>
+<body>
+    <fieldset>
+        <legend>Calculator</legend>
+        <form action = "calculate.php" method = "post">
+            Please type in two numbers and an operation (ex: 2 + 3)<br/>
+            <input type = "text" name = "fNum" size = "2"/>
+            <input type = "text" name = "op" size = "2"/>
+            <input type = "text" name = "sNum" size = "2"/>=
+        <input type = "text" name = "ans" size = "2" readonly = "read" value = "<?php echo htmlspecialchars($ans);?>"/>
+            <br/><br/>
+            <input type = "submit" value = "Calculate"/>
+        </form>
+    </fieldset>
+</body>
+</html>
