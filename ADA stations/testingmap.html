@@ -1,0 +1,146 @@
+<style>
+
+@import url(http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.2/leaflet.css);
+
+#map {
+  width: 1200px;
+  height: 2400px;
+}
+
+svg {
+  position: relative;
+}
+
+path {
+  fill: #000;
+  fill-opacity: .2;
+  stroke: #fff;
+  stroke-width: 1.5px;
+}
+
+path:hover {
+  fill: brown;
+  fill-opacity: .7;
+}
+</style>
+
+<p id="map">
+
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script src="http://cdnjs.cloudflare.com/ajax/libs/leaflet/0.7.2/leaflet.js"></script>
+<script>
+
+  Array.prototype.getUnique = function(){
+   var u = {}, a = [];
+   for(var i = 0, l = this.length; i < l; ++i){
+      if(u.hasOwnProperty(this[i])) {
+         continue;
+      }
+      a.push(this[i]);
+      u[this[i]] = 1;
+   }
+   return a;
+}
+
+var map = new L.Map("map", {center: [40.67, -73.94], zoom: 12})
+    .addLayer(new L.TileLayer("http://{s}.tiles.mapbox.com/v3/examples.map-vyofok3q/{z}/{x}/{y}.png"));
+
+var svg = d3.select(map.getPanes().overlayPane).append("svg"),
+    g = svg.append("g").attr("class", "leaflet-zoom-hide");
+
+d3.csv("./StationEntrances.csv", function(error, data) {
+
+d3.json("us-states.json", function(collection) {
+  var transform = d3.geo.transform({point: projectPoint}),
+      path = d3.geo.path().projection(transform);
+
+  var width = 1200,
+      height = 2400;
+
+  var data2 = data.filter(
+            function(d){return d.ADA === 'TRUE'})
+
+  var voronoi = d3.geom.voronoi()
+    .clipExtent([[0, 0], [width, height]]);
+
+  var svg2 = d3.select("#map").append("svg")
+    .attr("width", width)
+    .attr("height", height)
+    .on("mousemove", function() { redraw(); });
+
+  var path = svg2.append("g").selectAll("path");
+  makeVertices = function(f){
+   var vertices = data2.map(function(d) { 
+     var y = +d.Station_Longitude;
+     var x = +d.Station_Latitude;
+     var point = map.latLngToLayerPoint(new L.LatLng(x, y));
+     return [point.x, point.y];
+   })
+   var vertices = vertices.getUnique();
+   return(vertices);
+  }
+
+   var vertices = makeVertices();
+
+  // var feature = g.selectAll("path")
+  //     .data(collection.features)
+  //   .enter().append("path");
+
+  map.on("viewreset", reset);
+
+
+
+  reset();
+
+
+
+  // Reposition the SVG to cover the features.
+  function reset() {
+    console.log("changing stuff!")
+    // var bounds = path.bounds(collection),
+    //     topLeft = bounds[0],
+    //     bottomRight = bounds[1];
+
+    // svg.attr("width", bottomRight[0] - topLeft[0])
+    //     .attr("height", bottomRight[1] - topLeft[1])
+    //     .style("left", topLeft[0] + "px")
+    //     .style("top", topLeft[1] + "px");
+
+    // g.attr("transform", "translate(" + -topLeft[0] + "," + -topLeft[1] + ")");
+
+    //feature.attr("d", path);
+    redraw();
+  }
+
+
+function redraw() {
+
+  svg2.selectAll("circle")
+    .data(vertices.slice(1))
+  .enter().append("circle")
+    .attr("transform", function(d) { return "translate(" + d + ")"; })
+    .attr("r", 1.5);
+
+  path = path
+      .data(voronoi(vertices), polygon);
+  path.exit().remove();
+  path.enter().append("path")
+      .attr("class", function(d, i) { return "q" + (i % 9) + "-9"; })
+      .attr("d", polygon);
+  path.order();
+}
+
+function polygon(d) {
+  return "M" + d.join("L") + "Z";
+}
+redraw()
+
+  // Use Leaflet to implement a D3 geometric transformation.
+  function projectPoint(x, y) {
+    var point = map.latLngToLayerPoint(new L.LatLng(y, x));
+    this.stream.point(point.x, point.y);
+  }
+});
+
+})
+</script>

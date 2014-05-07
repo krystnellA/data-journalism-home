@@ -1,0 +1,73 @@
+/** Stately setup
+*************************************/
+@font-face {
+  font-family: 'stately-webfont';
+  src: url("../font/stately-webfont.eot");
+  src: url("../font/stately-webfont.eot?#iefix") format("embedded-opentype"), url("../font/stately-webfont.woff") format("woff"), url("../font/stately-webfont.ttf") format("truetype"), url("../font/stately-webfont.svg#testfontRegular") format("svg");
+  font-weight: normal;
+  font-style: normal; }
+
+.stately {
+  font: normal normal 300px "stately-webfont";
+  line-height: 100%;
+  font-size-adjust: none;
+  -webkit-text-rendering: optimizeLegibility;
+  -moz-text-rendering: optimizeLegibility;
+  -ms-text-rendering: optimizeLegibility;
+  -o-text-rendering: optimizeLegibility;
+  text-rendering: optimizeLegibility;
+  -moz-font-feature-settings: "liga=1";
+  -ms-font-feature-settings: "liga" 1;
+  -ms-font-feature-settings: "liga", "dlig";
+  overflow: hidden;
+  width: 300px;
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  background: #eeeeee;
+  border-radius: 0; }
+  .stately li {
+    float: left;
+    margin: -20% 0 0 -100%;
+    position: relative;
+    left: 101%;
+    width: 100%;
+    cursor: default;
+    -webkit-transition: all 1s ease-in;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none; }
+
+/** Style customizations
+*************************************/
+#intrideans {
+  color: #b0b0b0; }
+  #intrideans .ca, #intrideans .co, #intrideans .dc, #intrideans .fl, #intrideans .ks, #intrideans .md, #intrideans .mn, #intrideans .mi, #intrideans .nj, #intrideans .ny, #intrideans .oh, #intrideans .va, #intrideans .wa, #intrideans .wy {
+    color: orange; }
+ 
+	#intrideans {
+  color: #b0b0b0; }
+  #intrideans .sc, #intrideans .wa, #intrideans .ks, #intrideans .pa, #intrideans .co, #intrideans .wv, #intrideans .ok, #intrideans .va, #intrideans .nc  {
+    color: green; }
+	#intrideans {
+  color: #b0b0b0; }
+  #intrideans .mo, #intrideans .az, #intrideans .ia, #intrideans .mn, #intrideans .ca, #intrideans .la{
+    color: purple; }
+	#intrideans {
+  color: #b0b0b0; }
+  #intrideans .oh, #intrideans .ky, #intrideans .wi, #intrideans .ms, #intrideans .in, #intrideans .il{
+    color: red; }
+#intrideans {
+  color: #b0b0b0; }
+  #intrideans .fl, #intrideans .mi, #intrideans .ga, #intrideans .tx, #intrideans .ar, #intrideans .al, #intrideans .tn{
+    color: blue; }
+	
+ul.stately {
+  	width:1000px; /*width and font size must match*/
+  	font-size:1000px;
+  	color:#f0f0f0;
+}
